@@ -4,9 +4,9 @@ import os
 from flask import Flask, render_template, Response, send_from_directory
 from flask_cors import *
 # import camera driver
-import camera_opencv
-# from camera_opencv import Camera
-# from camera_opencv import commandAct
+#import camera_opencv
+from camera_opencv import Camera
+from camera_opencv import commandAct
 import threading
 
 # Raspberry Pi camera module (requires picamera package)
@@ -14,7 +14,7 @@ import threading
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
-camera = camera_opencv.Camera()
+camera = Camera()
 
 def gen(camera):
     """Video streaming generator function."""
@@ -64,11 +64,11 @@ class webapp:
         self.camera = camera
 
     def commandInput(self, inputCommand, valueA=None):
-        camera_opencv.commandAct(inputCommand, valueA)
+        commandAct(inputCommand, valueA)
 
     def modeselect(self, modeInput):
-        camera_opencv.Camera.modeSelect = modeInput
-        camera_opencv.Camera.CVMode = 'no'
+        Camera.modeSelect = modeInput
+        Camera.CVMode = 'no'
 
     def colorFindSet(self, H, S, V):
         camera.colorFindSet(H, S, V)
